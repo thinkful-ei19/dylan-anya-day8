@@ -76,6 +76,7 @@ const shoppingList = (function(){
   
   function handleItemCheckClicked() {
     $('.js-shopping-list').on('click', '.js-item-toggle', event => {
+      const id = getItemIdFromElement(event.currentTarget);
       const item = store.findById(id);
       api.updateItem(id, { checked: !item.checked }, () => {
         store.findAndUpdate(id, { checked: !item.checked });
@@ -91,9 +92,10 @@ const shoppingList = (function(){
       // get the index of the item in store.items
       const id = getItemIdFromElement(event.currentTarget);
       // delete the item
-      store.findAndDelete(id);
-      // render the updated shopping list
-      render();
+      api.deleteItem(id, () => {
+        store.findAndDelete(id);
+        render();
+      });      
     });
   }
   
@@ -103,13 +105,11 @@ const shoppingList = (function(){
       const id = getItemIdFromElement(event.currentTarget);
       const itemName = $(event.currentTarget).find('.shopping-item').val();
 
-      api.updateItem(id, { name: newName }, () => {
-        store.findAndUpdate(id, { name: newName });
+      api.updateItem(id, { name: itemName }, () => {
+        store.findAndUpdate(id, { name: itemName });
         render();
       });
 
-      store.findAndUpdateName(id, itemName);
-      render();
     });
   }
   
