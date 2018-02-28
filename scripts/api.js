@@ -7,7 +7,6 @@ const api = (function() {
 
     $.getJSON(`${BASE_URL}/items`, callback);
 
-    callback('api module works!');
   };
 
   const createItem = function(name, callback) {
