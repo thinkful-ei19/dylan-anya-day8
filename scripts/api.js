@@ -6,7 +6,7 @@ const api = (function() {
   const getItems = function(callback) {
     callback('api module works!');
   };
-  return {getItems}
+  return {getItems};
 }());
 
 api.getItems(function(data) {
